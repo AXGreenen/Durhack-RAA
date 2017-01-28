@@ -1,11 +1,10 @@
 var express = require('express'),
     app = express(),
     path = require('path'),
-    sql = require('mysql');
+    sql = require('mysql'),
+    appDetails = require('./appDetails.js');
 
-var sqlConnection = sql.createConnection({
-
-});
+var sqlConnection = sql.createConnection(appDetails.dbDetails);
 
 // connect to the DB
 sqlConnection.connect(function(err){
