@@ -4,7 +4,9 @@
   "description": "Safety after a night out - how to get home",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pre-start": "npm install",
+    "start": "node_modules/.bin/nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/AXGreenen/Durhack-RAA/issues"
   },
-  "homepage": "https://github.com/AXGreenen/Durhack-RAA#readme"
+  "homepage": "https://github.com/AXGreenen/Durhack-RAA#readme",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
 }
