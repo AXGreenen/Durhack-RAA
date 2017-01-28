@@ -4,11 +4,7 @@ var express = require('express'),
     sql = require('mysql');
 
 var sqlConnection = sql.createConnection({
-    host: "myeusql.dur.ac.uk",
-    user: "hnvp67",
-    password: "mornin2g",
-    insecureAuth: true,
-    database: "Phnvp67_safety_app"
+
 });
 
 // connect to the DB
@@ -33,9 +29,7 @@ app.get('/footfall', function(req, res){
 });
 
 app.get('/lighting', function(req, res){
-    sqlConnection.query("SELECT * FROM street_lights", function (err, dbres) {
-        res.send(dbres);
-    })
+    res.sendFile(path.join(__dirname, '/Public/Lighting/lighting.html'));
 });
 
 app.get('/map', function (req, res) {
@@ -58,6 +52,17 @@ app.get('/map', function (req, res) {
         }
     });
 });
+
+var api = express.Router();
+
+api.get("/lighting", function(req, res) {
+    sqlConnection.query("SELECT * FROM street_lights", function (err, dbres) {
+        console.log(dbres);
+        res.send(dbres);
+    })
+});
+
+app.use('/api', api);
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
