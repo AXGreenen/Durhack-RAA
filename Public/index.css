@@ -79,3 +79,7 @@ body {
     color: #fff;
     border-bottom-color: #fff;
 }
+
+#map {
+  height:100%;
+}
