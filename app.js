@@ -1,6 +1,25 @@
-var express = require('express');
-var app = express();
-var path = require('path');
+var express = require('express'),
+    app = express(),
+    path = require('path'),
+    sql = require('mysql');
+
+var sqlConnection = sql.createConnection({
+    host: "myeusql.dur.ac.uk",
+    user: "hnvp67",
+    password: "mornin2g",
+    insecureAuth: true,
+    database: "Phnvp67_safety_app"
+});
+
+// connect to the DB
+sqlConnection.connect(function(err){
+    if(err){
+        console.error(err);
+    }
+    else {
+        console.log("connection made!");
+    }
+});
 
 app.use(express.static(path.join(__dirname, 'node_modules')));
 app.use(express.static(path.join(__dirname, 'Public')));
@@ -14,7 +33,9 @@ app.get('/footfall', function(req, res){
 });
 
 app.get('/lighting', function(req, res){
-  res.send('The lignting information will be provided shortly');
+    sqlConnection.query("SELECT * FROM street_lights", function (err, dbres) {
+        res.send(dbres);
+    })
 });
 
 app.get('/map', function (req, res) {
