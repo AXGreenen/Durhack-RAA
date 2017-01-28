@@ -25,5 +25,8 @@
   "homepage": "https://github.com/AXGreenen/Durhack-RAA#readme",
   "devDependencies": {
     "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "express": "^4.14.0"
   }
 }
