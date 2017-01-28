@@ -19,19 +19,32 @@ function initMap() {
         zoom: 15,
         mapTypeId:'roadmap'
     });
+
+
+    google.maps.event.addListener(map, 'bounds_changed', function () {
+        var topLeft;
+        var bottomRight;
+        var googleCoords = map.getBounds();
+        topLeft = [googleCoords.f.b, googleCoords.b.b];
+        bottomRight = [googleCoords.f.f, googleCoords.b.f];
+
+        var httpRequest = new XMLHttpRequest();
+
+        httpRequest.onreadystatechange = function() {
+            if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                console.log(httpRequest.status);
+                var jsonResponse = JSON.parse(httpRequest.responseText);
+                for(var i in jsonResponse) {
+                    putlightdatapoint(parseFloat(jsonResponse[i].latitude), parseFloat(jsonResponse[i].longitude));
+                }
+            }
+        };
+
+        httpRequest.open('GET', 'http://localhost:3000/api/lighting?t=' + topLeft[0] + '&b=' + bottomRight[0] + "&l=" + topLeft[1] + "&r=" + bottomRight[1], true);
+        httpRequest.send();
+    });
+
+
+
 }
 
-httpRequest = new XMLHttpRequest();
-
-httpRequest.onreadystatechange = function() {
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-        console.log(httpRequest.status);
-        var jsonResponse = JSON.parse(httpRequest.responseText);
-        for(var i in jsonResponse) {
-            putlightdatapoint(parseFloat(jsonResponse[i].longitude), parseFloat(jsonResponse[i].latitude));
-        }
-    }
-};
-
-httpRequest.open('GET', 'http://localhost:3000/api/lighting', true);
-httpRequest.send();

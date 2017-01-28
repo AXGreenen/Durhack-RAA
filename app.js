@@ -55,7 +55,7 @@ app.get('/map', function (req, res) {
 var api = express.Router();
 
 api.get("/lighting", function(req, res) {
-    sqlConnection.query("SELECT * FROM street_lights", function (err, dbres) {
+    sqlConnection.query("SELECT * FROM street_lights WHERE latitude BETWEEN ? AND ? AND longitude BETWEEN ? AND ?", [req.query.b, req.query.t, req.query.l, req.query.r], function (err, dbres) {
         console.log(dbres);
         res.send(dbres);
     })
