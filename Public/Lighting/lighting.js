@@ -1,8 +1,18 @@
 var map;
 
+
+
 function putlightdatapoint(latitude,longitude) {
+    var customMarker = {
+        path: google.maps.SymbolPath.CIRCLE,
+        fillColor: 'yellow',
+        fillOpacity: 0.8,
+        scale: 5,
+        strokeWeight: .1
+    };
     var marker = new google.maps.Marker({
         position: {lat: latitude, lng: longitude},
+        icon:customMarker,
         map: map
     });
 }
@@ -94,6 +104,27 @@ function initMap() {
           ]
     });
 
+    if (false) {
+      var start = {lat:54.7715,lng:-1.5605};
+      var destination = {lat:54.7732,lng:-1.5747};
+      var request = {
+        origin: start,
+        destination: destination,
+        travelMode: 'WALKING',
+        provideRouteAlternatives: true
+      }
+
+      var directionsService = new google.maps.DirectionsService();
+      var directionsDisplay;
+      directionsDisplay = new google.maps.DirectionsRenderer();
+      directionsDisplay.setMap(map);
+
+      directionsService.route(request, function(result, status) {
+        if (status == 'OK') {
+          directionsDisplay.setDirections(result);
+        }
+      });
+    }
 
     google.maps.event.addListener(map, 'idle', function () {
         var topLeft;
@@ -117,7 +148,5 @@ function initMap() {
         httpRequest.open('GET', 'http://localhost:3000/api/lighting?t=' + topLeft[0] + '&b=' + bottomRight[0] + "&l=" + topLeft[1] + "&r=" + bottomRight[1], true);
         httpRequest.send();
     });
-
-
 
 }
