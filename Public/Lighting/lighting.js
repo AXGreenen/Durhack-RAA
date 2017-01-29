@@ -4,7 +4,6 @@ var map;
 
 
 function putlightdatapoint(latitude,longitude) {
-  //console.log(customMarker);
 
     var marker = new google.maps.Marker({
         position: {lat: latitude, lng: longitude},
@@ -114,30 +113,26 @@ function initMap() {
 // ---------------------Geolocation & directions--------------------------------
 
     if (navigator.geolocation) {
-
-      var start = {lat:0, lng:0};
-
       navigator.geolocation.getCurrentPosition(function(position) {
         start = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         }
-      });
-
-      var destination = {lat:54.7732,lng:-1.5747};
-      var request = {
-        origin: start,
-        destination: destination,
-        travelMode: 'WALKING',
-      }
-
-      var directionsService = new google.maps.DirectionsService();
-      var directionsDisplay = new google.maps.DirectionsRenderer();
-      directionsDisplay.setMap(map);
-      directionsService.route(request, function(result, status) {
-        if (status == 'OK') {
-          directionsDisplay.setDirections(result);
+        var destination = {lat:54.7732,lng:-1.5747};
+        var request = {
+          origin: start,
+          destination: destination,
+          travelMode: 'WALKING',
         }
+
+        var directionsService = new google.maps.DirectionsService();
+        var directionsDisplay = new google.maps.DirectionsRenderer();
+        directionsDisplay.setMap(map);
+        directionsService.route(request, function(result, status) {
+          if (status == 'OK') {
+            directionsDisplay.setDirections(result);
+          }
+        });
       });
     }
 
@@ -156,7 +151,6 @@ function initMap() {
 
         httpRequest.onreadystatechange = function() {
             if (httpRequest.readyState === XMLHttpRequest.DONE) {
-                console.log(httpRequest.status);
                 var jsonResponse = JSON.parse(httpRequest.responseText);
                 for(var i in jsonResponse) {
                     putlightdatapoint(jsonResponse[i].latitude, jsonResponse[i].longitude);
