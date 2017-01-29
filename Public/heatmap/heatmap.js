@@ -98,6 +98,7 @@ function initMap() {
                 stylers: [{color: '#3C1717'}]
               }
             ]
+
     });
 
     heatmap = new google.maps.visualization.HeatmapLayer({
@@ -105,18 +106,46 @@ function initMap() {
         //data: null,
         map: map,
         radius: 15,
-	gradient: [
-		'rgba(255,255,0,0)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,191,0,1)'
-	]
+      	gradient: [
+      		'rgba(255,255,0,0)',
+      		'rgba(255,255,0,1)',
+      		'rgba(255,255,0,1)',
+      		'rgba(255,255,0,1)',
+      		'rgba(255,255,0,1)',
+      		'rgba(255,255,0,1)',
+      		'rgba(255,255,0,1)',
+      		'rgba(255,255,0,1)',
+      		'rgba(255,191,0,1)'
+      	]
     });
+
+    var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+
+    if (navigator.geolocation) {
+
+      navigator.geolocation.getCurrentPosition(function(position) {
+        start = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+        var destination = {lat:54.7732,lng:-1.5747};
+        var request = {
+          origin: start,
+          destination: destination,
+          travelMode: 'WALKING',
+        }
+
+        var directionsService = new google.maps.DirectionsService();
+        var directionsDisplay = new google.maps.DirectionsRenderer();
+        directionsDisplay.setMap(map);
+        directionsService.route(request, function(result, status) {
+          if (status == 'OK') {
+            directionsDisplay.setDirections(result);
+          }
+        });
+      });
+    }
 
     google.maps.event.addListener(map, 'idle', function () {
         var topLeft;
