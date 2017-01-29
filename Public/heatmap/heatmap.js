@@ -82,11 +82,6 @@ function initMap() {
                 elementType: 'geometry.fill',
                 stylers: [{color: '#572222'}]
               },
-              /*{
-                featureType: 'water',
-                elementType: 'geometry.stroke',
-                stylers: [{color: '#ff00ff'}]
-              },*/
               {
                 featureType: 'water',
                 elementType: 'labels.text.fill',
@@ -106,17 +101,17 @@ function initMap() {
         //data: null,
         map: map,
         radius: 15,
-      	gradient: [
-      		'rgba(255,255,0,0)',
-      		'rgba(255,255,0,1)',
-      		'rgba(255,255,0,1)',
-      		'rgba(255,255,0,1)',
-      		'rgba(255,255,0,1)',
-      		'rgba(255,255,0,1)',
-      		'rgba(255,255,0,1)',
-      		'rgba(255,255,0,1)',
-      		'rgba(255,191,0,1)'
-      	]
+    	gradient: [
+    		'rgba(255,255,0,0)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,191,0,1)'
+    	]
     });
 
     var trafficLayer = new google.maps.TrafficLayer();
@@ -124,12 +119,20 @@ function initMap() {
 
     if (navigator.geolocation) {
 
+      var destination;
+      var destinationPostalCode =  window.prompt('Destination Postal Code');
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode( { 'address': destinationPostalCode}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          destination =results[0].geometry.location;
+        }
+      });
+
       navigator.geolocation.getCurrentPosition(function(position) {
         start = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         }
-        var destination = {lat:54.7732,lng:-1.5747};
         var request = {
           origin: start,
           destination: destination,
