@@ -108,3 +108,7 @@ input {
   background: #333;
   color: #eee;
 }
+
+.mastfoot p {
+  font-size:12px;
+}
