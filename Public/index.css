@@ -99,7 +99,7 @@ body {
   font-size:14px;
   margin-bottom:4px;
     display: flex;
-    height: 6rem;
+    height: 5rem;
 }
 
 #directions * {
@@ -118,8 +118,15 @@ input {
 .postcode-input {
     max-width: 320px;
     max-height: 35px;
+    align-self: center;
 }
 
 .postcode-submit {
     max-height: 35px;
+    align-self: center;
+}
+
+.mastfoot p {
+  font-size:12px;
+    margin-bottom: 0;
 }
