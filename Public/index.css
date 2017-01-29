@@ -50,7 +50,7 @@ body {
 
 .nav-masthead {
     margin-right: 15px;
-    width: 15rem;
+    width: 20rem;
     align-self: center;
 }
 
@@ -91,4 +91,18 @@ body {
 
 .btn-secondary:hover {
     background-color: #ddd;
+}
+
+#directions {
+  font-size:14px;
+  margin-bottom:4px;
+}
+
+#directions * {
+  margin:4px;
+}
+
+input {
+  background: #333;
+  color: #eee;
 }

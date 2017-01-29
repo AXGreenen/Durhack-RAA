@@ -117,38 +117,7 @@ function initMap() {
     var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map);
 
-    if (navigator.geolocation) {
 
-      var destination;
-      var destinationPostalCode =  window.prompt('Destination Postal Code');
-      var geocoder = new google.maps.Geocoder();
-      geocoder.geocode( { 'address': destinationPostalCode}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          destination =results[0].geometry.location;
-        }
-      });
-
-      navigator.geolocation.getCurrentPosition(function(position) {
-        start = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        }
-        var request = {
-          origin: start,
-          destination: destination,
-          travelMode: 'WALKING',
-        }
-
-        var directionsService = new google.maps.DirectionsService();
-        var directionsDisplay = new google.maps.DirectionsRenderer();
-        directionsDisplay.setMap(map);
-        directionsService.route(request, function(result, status) {
-          if (status == 'OK') {
-            directionsDisplay.setDirections(result);
-          }
-        });
-      });
-    }
 
     google.maps.event.addListener(map, 'idle', function () {
         var topLeft;
@@ -174,4 +143,40 @@ function initMap() {
         httpRequest.open('GET', 'http://localhost:3000/api/lighting?t=' + topLeft[0] + '&b=' + bottomRight[0] + "&l=" + topLeft[1] + "&r=" + bottomRight[1], true);
         httpRequest.send();
     });
+}
+
+function doDestinationRoute(){
+
+  if (navigator.geolocation) {
+
+    var destination;
+    var destinationPostalCode =  document.getElementById("postcode").value;
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode( { 'address': destinationPostalCode}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        destination =results[0].geometry.location;
+      }
+    });
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+      start = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      }
+      var request = {
+        origin: start,
+        destination: destination,
+        travelMode: 'WALKING',
+      }
+
+      var directionsService = new google.maps.DirectionsService();
+      var directionsDisplay = new google.maps.DirectionsRenderer();
+      directionsDisplay.setMap(map);
+      directionsService.route(request, function(result, status) {
+        if (status == 'OK') {
+          directionsDisplay.setDirections(result);
+        }
+      });
+    });
+  }
 }
