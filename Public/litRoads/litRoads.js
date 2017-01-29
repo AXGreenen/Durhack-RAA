@@ -103,7 +103,6 @@ function initMap() {
                             else if(tempPoints.length > 3) {
                                 var tempTempPoints = [];
                                 for (var k in tempPoints) {
-                                    jsonRespnseCopy.pop()
                                     tempTempPoints.push(tempPoints[k].latitude + "," + tempPoints[k].longitude);
                                 }
                                 runSnapToRoad(tempTempPoints);
