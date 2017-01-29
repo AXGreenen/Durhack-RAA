@@ -7,10 +7,6 @@ function putlightdatapoint(latitude,longitude) {
         map: map
         //type:lighting
     });
-
-    var trafficLayer = new google.maps.TrafficLayer();
-    trafficLayer.setMap(map);
-
 }
 
 function initMap() {
@@ -21,7 +17,7 @@ function initMap() {
     });
 
 
-    google.maps.event.addListener(map, 'bounds_changed', function () {
+    google.maps.event.addListener(map, 'idle', function () {
         var topLeft;
         var bottomRight;
         var googleCoords = map.getBounds();
