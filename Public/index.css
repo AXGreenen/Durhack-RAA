@@ -82,4 +82,5 @@ body {
 
 #map {
   height:100%;
+  text-shadow: none;
 }
