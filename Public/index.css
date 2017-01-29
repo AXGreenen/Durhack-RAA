@@ -98,6 +98,8 @@ body {
 #directions {
   font-size:14px;
   margin-bottom:4px;
+    display: flex;
+    height: 6rem;
 }
 
 #directions * {
@@ -107,4 +109,17 @@ body {
 input {
   background: #333;
   color: #eee;
+}
+
+.input-label {
+    align-self: center;
+}
+
+.postcode-input {
+    max-width: 320px;
+    max-height: 35px;
+}
+
+.postcode-submit {
+    max-height: 35px;
 }
