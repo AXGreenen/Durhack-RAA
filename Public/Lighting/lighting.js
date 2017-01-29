@@ -1,15 +1,11 @@
 var map;
 
+// ---------------------putlightdatapoint() function----------------------------
 
 
 function putlightdatapoint(latitude,longitude) {
-    var customMarker = {
-        path: google.maps.SymbolPath.CIRCLE,
-        fillColor: 'yellow',
-        fillOpacity: 0.8,
-        scale: 5,
-        strokeWeight: .1
-    };
+  console.log(customMarker);
+
     var marker = new google.maps.Marker({
         position: {lat: latitude, lng: longitude},
         icon:customMarker,
@@ -17,7 +13,18 @@ function putlightdatapoint(latitude,longitude) {
     });
 }
 
+// ------------------------------Making Map-------------------------------------
+
+
 function initMap() {
+  window.customMarker = {
+      path: google.maps.SymbolPath.CIRCLE,
+      fillColor: 'yellow',
+      fillOpacity: 0.8,
+      scale: 5,
+      strokeWeight: .1
+  };
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 54.7732, lng: -1.5764},
         zoom: 15,
@@ -104,27 +111,39 @@ function initMap() {
           ]
     });
 
-    if (false) {
-      var start = {lat:54.7715,lng:-1.5605};
+// ---------------------Geolocation & directions--------------------------------
+
+    if (navigator.geolocation) {
+
+      var start = {lat:0, lng:0};
+
+      navigator.geolocation.getCurrentPosition(function(position) {
+        start = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+      });
+
       var destination = {lat:54.7732,lng:-1.5747};
       var request = {
         origin: start,
         destination: destination,
         travelMode: 'WALKING',
-        provideRouteAlternatives: true
       }
 
       var directionsService = new google.maps.DirectionsService();
-      var directionsDisplay;
-      directionsDisplay = new google.maps.DirectionsRenderer();
+      var directionsDisplay = new google.maps.DirectionsRenderer();
       directionsDisplay.setMap(map);
-
       directionsService.route(request, function(result, status) {
         if (status == 'OK') {
           directionsDisplay.setDirections(result);
         }
       });
     }
+
+
+// ----------------------------Event trigger------------------------------------
+
 
     google.maps.event.addListener(map, 'idle', function () {
         var topLeft;
