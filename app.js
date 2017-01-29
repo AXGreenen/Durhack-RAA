@@ -35,6 +35,10 @@ app.get('/heatmap', function(req, res){
     res.sendFile(path.join(__dirname, '/Public/heatmap/heatmap.html'));
 });
 
+app.get('/lit-roads', function(req, res){
+    res.sendFile(path.join(__dirname, '/Public/litRoads/litRoads.html'));
+});
+
 app.get('/map', function (req, res) {
     var options = {
         root: __dirname + '/Public/',
