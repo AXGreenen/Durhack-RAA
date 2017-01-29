@@ -41,6 +41,7 @@ body {
     justify-content: space-between;
     margin-top: 5px;
     margin-bottom: 5px;
+    height: 48px;
 }
 
 .masthead-brand {
@@ -129,4 +130,16 @@ input {
 .mastfoot p {
   font-size:12px;
     margin-bottom: 0;
+}
+
+.site-header-map {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 60px;
+}
+
+#heatmap-header {
+    height: 73px;
 }
