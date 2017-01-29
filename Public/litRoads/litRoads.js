@@ -70,26 +70,56 @@ function initMap() {
             if (httpRequest.readyState === XMLHttpRequest.DONE) {
                 var jsonResponse = JSON.parse(httpRequest.responseText);
                 var tempPoints = [];
+                var jsonRespnseCopy = jsonResponse;
                 var j = 0;
                 var previousPoint = jsonResponse[0];
                 while(j < jsonResponse.length) {
-                    /*console.log(Math.abs(previousPoint.latitude - jsonResponse[j].latitude) < 0.01);
-                    console.log(Math.abs(previousPoint.longitude - jsonResponse[j].longitude) < 0.01);
+                    /*console.log(Math.abs(previousPoint.latitude - jsonResponse[j].latitude) < 0.0005);
+                    console.log(Math.abs(previousPoint.longitude - jsonResponse[j].longitude) < 0.0005);
                     previousPoint = jsonResponse[j];
+                    j++;*/
+
+                    /*for(var point in jsonResponse) {
+                        console.log(point);
+                    }
                     j++;*/
 
 
                     if(tempPoints.length < 100) {
-                        if(Math.abs(previousPoint.latitude - jsonResponse[j].latitude) < 0.0005 && Math.abs(previousPoint.longitude - jsonResponse[j].longitude) < 0.0005) {
-                            tempPoints.push(jsonResponse[j].latitude + "," + jsonResponse[j].longitude);
+                        if (tempPoints.length === 0) {
+                            tempPoints.push({latitude: jsonResponse[j].latitude, longitude: jsonResponse[j].longitude});
                         }
-                        else if(tempPoints.length > 3) {
-                            runSnapToRoad(tempPoints);
-                            tempPoints = [];
+                        else {
+                            var add = false;
+                            for(var i in tempPoints) {
+                                if(Math.abs(tempPoints[i].latitude - jsonResponse[j].latitude) < 0.003 && Math.abs(tempPoints[i].longitude - jsonResponse[j].longitude) < 0.003) {
+                                    add = true;
+                                    console.log("we make it here!")
+                                }
+                            }
+                            if(add) {
+                                tempPoints.push({latitude: jsonResponse[j].latitude, longitude: jsonResponse[j].longitude});
+                            }
+                            else if(tempPoints.length > 3) {
+                                var tempTempPoints = [];
+                                for (var k in tempPoints) {
+                                    jsonRespnseCopy.pop()
+                                    tempTempPoints.push(tempPoints[k].latitude + "," + tempPoints[k].longitude);
+                                }
+                                runSnapToRoad(tempTempPoints);
+                                tempPoints = [];
+                            }
+                            else{
+                                tempPoints = [];
+                            }
                         }
                     }
                     else {
-                        runSnapToRoad(tempPoints);
+                        var tempTempPoints = [];
+                        for (var k in tempPoints) {
+                            tempTempPoints.push(tempPoints[k].latitude + "," + tempPoints[k].longitude);
+                        }
+                        runSnapToRoad(tempTempPoints);
                         tempPoints = [];
                     }
                     previousPoint = jsonResponse[j];
