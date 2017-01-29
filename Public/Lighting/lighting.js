@@ -4,7 +4,7 @@ var map;
 
 
 function putlightdatapoint(latitude,longitude) {
-  console.log(customMarker);
+  //console.log(customMarker);
 
     var marker = new google.maps.Marker({
         position: {lat: latitude, lng: longitude},
