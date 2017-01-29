@@ -82,11 +82,6 @@ function initMap() {
                 elementType: 'geometry.fill',
                 stylers: [{color: '#572222'}]
               },
-              /*{
-                featureType: 'water',
-                elementType: 'geometry.stroke',
-                stylers: [{color: '#ff00ff'}]
-              },*/
               {
                 featureType: 'water',
                 elementType: 'labels.text.fill',
@@ -98,6 +93,7 @@ function initMap() {
                 stylers: [{color: '#3C1717'}]
               }
             ]
+
     });
 
     heatmap = new google.maps.visualization.HeatmapLayer({
@@ -105,18 +101,54 @@ function initMap() {
         //data: null,
         map: map,
         radius: 15,
-	gradient: [
-		'rgba(255,255,0,0)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,255,0,1)',
-		'rgba(255,191,0,1)'
-	]
+    	gradient: [
+    		'rgba(255,255,0,0)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,255,0,1)',
+    		'rgba(255,191,0,1)'
+    	]
     });
+
+    var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+
+    if (navigator.geolocation) {
+
+      var destination;
+      var destinationPostalCode =  window.prompt('Destination Postal Code');
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode( { 'address': destinationPostalCode}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          destination =results[0].geometry.location;
+        }
+      });
+
+      navigator.geolocation.getCurrentPosition(function(position) {
+        start = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+        var request = {
+          origin: start,
+          destination: destination,
+          travelMode: 'WALKING',
+        }
+
+        var directionsService = new google.maps.DirectionsService();
+        var directionsDisplay = new google.maps.DirectionsRenderer();
+        directionsDisplay.setMap(map);
+        directionsService.route(request, function(result, status) {
+          if (status == 'OK') {
+            directionsDisplay.setDirections(result);
+          }
+        });
+      });
+    }
 
     google.maps.event.addListener(map, 'idle', function () {
         var topLeft;

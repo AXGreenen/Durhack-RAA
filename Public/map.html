@@ -25,11 +25,9 @@
       var map;
 
         function putlightdatapoint(latitude,longitude) {
-          // var lightingicon = 'url_of_the_lighting_image'
           var marker = new google.maps.Marker({
             position: {lat: latitude, lng: longitude},
             map: map
-            //type:lighting
           });
 
           var trafficLayer = new google.maps.TrafficLayer();
@@ -44,10 +42,6 @@
           mapTypeId:'roadmap'
         });
 
-
-
-        putlightdatapoint(54.7757,-1.5800);
-        
 
       }
     </script>

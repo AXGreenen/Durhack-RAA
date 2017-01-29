@@ -84,3 +84,11 @@ body {
   height:100%;
   text-shadow: none;
 }
+
+.cover-heading {
+  font-variant:small-caps;
+}
+
+.btn-secondary:hover {
+    background-color: #ddd;
+}
