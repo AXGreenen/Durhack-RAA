@@ -31,7 +31,7 @@ function initMap() {
                 console.log(httpRequest.status);
                 var jsonResponse = JSON.parse(httpRequest.responseText);
                 for(var i in jsonResponse) {
-                    putlightdatapoint(parseFloat(jsonResponse[i].latitude), parseFloat(jsonResponse[i].longitude));
+                    putlightdatapoint(jsonResponse[i].latitude, jsonResponse[i].longitude);
                 }
             }
         };
